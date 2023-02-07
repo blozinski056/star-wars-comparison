@@ -11,6 +11,41 @@
   justify-content: $jc;
 }
 
+@keyframes loading {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  24% {
+    opacity: 1;
+    transform: none;
+  }
+  25% {
+    opacity: 1;
+    transform: translateX(calc(8vw));
+  }
+  49% {
+    opacity: 1;
+    transform: translateX(calc(8vw));
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(calc(16vw));
+  }
+  74% {
+    opacity: 1;
+    transform: translateX(calc(16vw));
+  }
+  75% {
+    opacity: 1;
+    transform: translateX(calc(24vw));
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(calc(24vw));
+  }
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -32,12 +67,52 @@ body {
 img {
   @include w-h(200px, 150px);
   object-fit: cover;
+  z-index: 20;
 }
 
 .app {
   @include w-h(100vw, 100vh);
   @include flexbox($fd: column, $jc: flex-start);
   padding: 3vh;
+}
+
+.loading {
+  @include w-h(100vw, 100vh);
+  @include flexbox($fd: column);
+  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  .loading_container {
+    @include w-h(24vw, 10vh);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 50px;
+    position: relative;
+
+    .block {
+      @include w-h(100%, 10%);
+      align-self: center;
+      background-color: goldenrod;
+    }
+
+    .x_wing_container {
+      @include w-h(24vw, 10vh);
+      @include flexbox($jc: flex-start);
+      background-color: black;
+      transform: translateX(100px);
+      position: absolute;
+      animation: loading 2s infinite;
+
+      .x_wing {
+        @include w-h(10vh, 10vh);
+        object-fit: contain;
+        transform: rotate(90deg);
+      }
+    }
+  }
 }
 
 .select_boxes {

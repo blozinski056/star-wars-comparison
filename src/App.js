@@ -4,8 +4,9 @@ import "./App.css";
 
 function App() {
   const [charData, setCharData] = useState([]);
-  const [done, setDone] = useState(false);
   const [output, setOutput] = useState("");
+  const [done, setDone] = useState(false);
+  const [stillLoading, setStillLoading] = useState(true);
 
   const getAllCharacterData = useCallback(async () => {
     let select1 = document.getElementById("character_1_select");
@@ -35,6 +36,7 @@ function App() {
         select2.appendChild(option2);
       }
     }
+    setStillLoading(false);
     setCharData(final);
   }, []);
 
@@ -44,7 +46,7 @@ function App() {
 
   useEffect(() => {
     let elm = document.getElementById("similarities");
-    if (done && elm !== undefined) {
+    if (elm !== undefined) {
       elm.innerHTML = output;
       elm.animate(
         [
@@ -61,6 +63,7 @@ function App() {
           fill: "forwards",
         }
       );
+      document.getElementById("button").innerHTML = "Compare!";
       setDone(false);
     }
   }, [done, output]);
@@ -68,6 +71,21 @@ function App() {
   // comparing characters chosen by user
   const compareCharacters = async (e) => {
     e.preventDefault();
+
+    document.getElementById("button").innerHTML = "Gathering Intel...";
+    document.getElementById("button").animate(
+      [
+        {
+          opacity: 0,
+        },
+        {
+          opacity: 1,
+        },
+      ],
+      {
+        duration: 1000,
+      }
+    );
 
     // empty innerHTML at the start
     document.getElementById("similarities").innerHTML = "";
@@ -164,6 +182,19 @@ function App() {
 
   return (
     <div className="app">
+      {stillLoading && (
+        <div className="loading">
+          <h3>Loading...</h3>
+          <div className="loading_container">
+            <div className="block"></div>
+            <div className="block"></div>
+            <div className="block"></div>
+            <div className="x_wing_container">
+              <img src="/images/x-wing.png" alt="" className="x_wing" />
+            </div>
+          </div>
+        </div>
+      )}
       <img src="/images/star-wars.png" alt="" />
       <h1 className="title">Character Comparison</h1>
       <form className="select_boxes" onSubmit={(e) => compareCharacters(e)}>

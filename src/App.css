@@ -1,3 +1,71 @@
+@-webkit-keyframes loading {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  24% {
+    opacity: 1;
+    transform: none;
+  }
+  25% {
+    opacity: 1;
+    transform: translateX(8vw);
+  }
+  49% {
+    opacity: 1;
+    transform: translateX(8vw);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(16vw);
+  }
+  74% {
+    opacity: 1;
+    transform: translateX(16vw);
+  }
+  75% {
+    opacity: 1;
+    transform: translateX(24vw);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(24vw);
+  }
+}
+@keyframes loading {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  24% {
+    opacity: 1;
+    transform: none;
+  }
+  25% {
+    opacity: 1;
+    transform: translateX(8vw);
+  }
+  49% {
+    opacity: 1;
+    transform: translateX(8vw);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(16vw);
+  }
+  74% {
+    opacity: 1;
+    transform: translateX(16vw);
+  }
+  75% {
+    opacity: 1;
+    transform: translateX(24vw);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(24vw);
+  }
+}
 * {
   box-sizing: border-box;
   margin: 0;
@@ -20,6 +88,7 @@ img {
   height: 150px;
   -o-object-fit: cover;
      object-fit: cover;
+  z-index: 20;
 }
 
 .app {
@@ -30,6 +99,55 @@ img {
   align-items: center;
   justify-content: flex-start;
   padding: 3vh;
+}
+
+.loading {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+.loading .loading_container {
+  width: 24vw;
+  height: 10vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  -moz-column-gap: 50px;
+       column-gap: 50px;
+  position: relative;
+}
+.loading .loading_container .block {
+  width: 100%;
+  height: 10%;
+  align-self: center;
+  background-color: goldenrod;
+}
+.loading .loading_container .x_wing_container {
+  width: 24vw;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: black;
+  transform: translateX(100px);
+  position: absolute;
+  -webkit-animation: loading 2s infinite;
+          animation: loading 2s infinite;
+}
+.loading .loading_container .x_wing_container .x_wing {
+  width: 10vh;
+  height: 10vh;
+  -o-object-fit: contain;
+     object-fit: contain;
+  transform: rotate(90deg);
 }
 
 .select_boxes {
