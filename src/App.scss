@@ -1,0 +1,93 @@
+// MIXINS
+@mixin w-h($w: 50px, $h: 50px) {
+  width: $w;
+  height: $h;
+}
+
+@mixin flexbox($fd: row, $ai: center, $jc: center) {
+  display: flex;
+  flex-direction: $fd;
+  align-items: $ai;
+  justify-content: $jc;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 0.1rem;
+  line-height: 1.5rem;
+}
+
+body {
+  background-color: black;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+img {
+  @include w-h(200px, 150px);
+  object-fit: cover;
+}
+
+.app {
+  @include w-h(100vw, 100vh);
+  @include flexbox($fd: column, $jc: flex-start);
+  padding: 3vh;
+}
+
+.select_boxes {
+  @include w-h(70%, auto);
+  @include flexbox($jc: space-evenly);
+  margin-top: 2vh;
+
+  button {
+    @include w-h(200px, 30px);
+    background-color: black;
+    cursor: pointer;
+    border: solid 1px white;
+    align-self: flex-end;
+    transition: 0.3s;
+
+    &:hover {
+      color: goldenrod;
+      border: solid 1px goldenrod;
+      transition: 0.3s;
+    }
+
+    &:active {
+      color: black;
+      border: solid 1px black;
+      background-color: goldenrod;
+      transition: 0.3s;
+    }
+  }
+
+  div {
+    @include flexbox($fd: column);
+    select {
+      @include w-h(200px, 30px);
+      background-color: black;
+      cursor: pointer;
+
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: white;
+      }
+    }
+  }
+}
+
+p {
+  text-align: center;
+  margin-top: 2vh;
+  transform: perspective(200px) rotateX(20deg) translateY(100vh);
+  transform-origin: center;
+}

@@ -1,38 +1,88 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 0.1rem;
+  line-height: 1.5rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: black;
+}
+body::-webkit-scrollbar {
+  width: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+img {
+  width: 200px;
+  height: 150px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 3vh;
+}
+
+.select_boxes {
+  width: 70%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 2vh;
+}
+.select_boxes button {
+  width: 200px;
+  height: 30px;
+  background-color: black;
+  cursor: pointer;
+  border: solid 1px white;
+  align-self: flex-end;
+  transition: 0.3s;
+}
+.select_boxes button:hover {
+  color: goldenrod;
+  border: solid 1px goldenrod;
+  transition: 0.3s;
+}
+.select_boxes button:active {
+  color: black;
+  border: solid 1px black;
+  background-color: goldenrod;
+  transition: 0.3s;
+}
+.select_boxes div {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.select_boxes div select {
+  width: 200px;
+  height: 30px;
+  background-color: black;
+  cursor: pointer;
+}
+.select_boxes div select::-webkit-scrollbar {
+  width: 10px;
+}
+.select_boxes div select::-webkit-scrollbar-thumb {
+  background-color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+p {
+  text-align: center;
+  margin-top: 2vh;
+  transform: perspective(200px) rotateX(20deg) translateY(100vh);
+  transform-origin: center;
+}/*# sourceMappingURL=App.css.map */
