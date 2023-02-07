@@ -143,8 +143,8 @@ img {
           animation: loading 2s infinite;
 }
 .loading .loading_container .x_wing_container .x_wing {
-  width: 10vh;
-  height: 10vh;
+  width: 5vh;
+  height: 5vh;
   -o-object-fit: contain;
      object-fit: contain;
   transform: rotate(90deg);

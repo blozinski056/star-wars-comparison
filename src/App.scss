@@ -107,7 +107,7 @@ img {
       animation: loading 2s infinite;
 
       .x_wing {
-        @include w-h(10vh, 10vh);
+        @include w-h(5vh, 5vh);
         object-fit: contain;
         transform: rotate(90deg);
       }
