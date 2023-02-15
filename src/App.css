@@ -163,7 +163,7 @@ img {
   background-color: white;
 }
 
-p {
+#similarities {
   text-align: center;
   margin-top: 2vh;
   transform: perspective(200px) rotateX(20deg) translateY(100vh);

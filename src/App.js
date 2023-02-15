@@ -1,21 +1,34 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
+import { nanoid } from "nanoid";
 
 function App() {
   const [charData, setCharData] = useState([]);
-  const [output, setOutput] = useState("");
+  const [output, setOutput] = useState([]);
   const [done, setDone] = useState(false);
   const [stillLoading, setStillLoading] = useState(true);
   const [options1, setOptions1] = useState([]);
   const [options2, setOptions2] = useState([]);
 
   const options1Elms = options1.map((opt) => {
-    return <option value={opt}>{opt}</option>;
+    return (
+      <option value={opt} key={nanoid()}>
+        {opt}
+      </option>
+    );
   });
 
   const options2Elms = options2.map((opt) => {
-    return <option value={opt}>{opt}</option>;
+    return (
+      <option value={opt} key={nanoid()}>
+        {opt}
+      </option>
+    );
+  });
+
+  const finalOutput = output.map((s) => {
+    return <Fragment key={nanoid()}>{s === null ? <br /> : s}</Fragment>;
   });
 
   const getAllCharacterData = useCallback(async () => {
@@ -52,7 +65,6 @@ function App() {
   useEffect(() => {
     let elm = document.getElementById("similarities");
     if (elm !== undefined) {
-      elm.innerHTML = output;
       elm.animate(
         [
           {
@@ -92,10 +104,7 @@ function App() {
       }
     );
 
-    // empty innerHTML at the start
-    document.getElementById("similarities").innerHTML = "";
-
-    let finalString = "";
+    let finalString = [];
 
     // get character names from select boxes
     let char1 = document.getElementById("character_1_select");
@@ -119,16 +128,21 @@ function App() {
       const planet = await axios.get(charData1.planet);
       const planetFilms = await planet.data.films;
 
-      let planetString = `${charData1.name} and ${charData2.name} share the same homeworld of ${planet.data.name} in:`;
+      let planetString = [
+        `${charData1.name} and ${charData2.name} share the same homeworld of ${planet.data.name} in:`,
+      ];
 
       for (let i = 0; i < planetFilms.length; i++) {
         if (commonFilms.has(planetFilms[i])) {
           const film = await axios.get(planetFilms[i]);
-          planetString = planetString.concat("<br />", film.data.title);
+          planetString.push(null);
+          planetString.push(film.data.title);
         }
       }
 
-      finalString = finalString.concat(planetString, "<br /><br />");
+      finalString.push(...planetString);
+      finalString.push(null);
+      finalString.push(null);
     }
 
     // COMPARE STARSHIPS
@@ -142,16 +156,21 @@ function App() {
     for (let i = 0; i < similarStarships.length; i++) {
       const starship = await axios.get(similarStarships[i]);
       const starshipFilms = await starship.data.films;
-      let starshipString = `${charData1.name} and ${charData2.name} piloted the same starship, ${starship.data.name}, in:`;
+      let starshipString = [
+        `${charData1.name} and ${charData2.name} piloted the same starship, ${starship.data.name}, in:`,
+      ];
 
       for (let j = 0; j < starshipFilms.length; j++) {
         if (commonFilms.has(starshipFilms[j])) {
           const film = await axios.get(starshipFilms[j]);
-          starshipString = starshipString.concat("<br />", film.data.title);
+          starshipString.push(null);
+          starshipString.push(film.data.title);
         }
       }
 
-      finalString = finalString.concat(starshipString, "<br /><br />");
+      finalString.push(...starshipString);
+      finalString.push(null);
+      finalString.push(null);
     }
 
     // COMPARE VEHICLES
@@ -165,20 +184,27 @@ function App() {
     for (let i = 0; i < similarVehicles.length; i++) {
       const vehicle = await axios.get(similarVehicles[i]);
       const vehicleFilms = await vehicle.data.films;
-      let vehicleString = `${charData1.name} and ${charData2.name} used the same vehicle, ${vehicle.data.name}, in:`;
+      let vehicleString = [
+        `${charData1.name} and ${charData2.name} used the same vehicle, ${vehicle.data.name}, in:`,
+      ];
 
       for (let j = 0; j < vehicleFilms.length; j++) {
         if (commonFilms.has(vehicleFilms[j])) {
           const film = await axios.get(vehicleFilms[j]);
-          vehicleString = vehicleString.concat("<br />", film.data.title);
+          vehicleString.push(null);
+          vehicleString.push(film.data.title);
         }
       }
 
-      finalString = finalString.concat(vehicleString, "<br /><br />");
+      finalString.push(...vehicleString);
+      finalString.push(null);
+      finalString.push(null);
     }
 
-    if (finalString === "") {
-      finalString = `*${charData1.name} and ${charData2.name} do not have a homeworld, starship, or vehicle in common :(*`;
+    if (finalString.length === 0) {
+      finalString.push(
+        `*${charData1.name} and ${charData2.name} do not have a homeworld, starship, or vehicle in common :(*`
+      );
     }
 
     setOutput(finalString);
@@ -217,7 +243,7 @@ function App() {
           </select>
         </div>
       </form>
-      <p id="similarities"></p>
+      <div id="similarities">{finalOutput}</div>
     </div>
   );
 }
