@@ -7,11 +7,21 @@ function App() {
   const [output, setOutput] = useState("");
   const [done, setDone] = useState(false);
   const [stillLoading, setStillLoading] = useState(true);
+  const [options1, setOptions1] = useState([]);
+  const [options2, setOptions2] = useState([]);
+
+  const options1Elms = options1.map((opt) => {
+    return <option value={opt}>{opt}</option>;
+  });
+
+  const options2Elms = options2.map((opt) => {
+    return <option value={opt}>{opt}</option>;
+  });
 
   const getAllCharacterData = useCallback(async () => {
-    let select1 = document.getElementById("character_1_select");
-    let select2 = document.getElementById("character_2_select");
     let final = [];
+    let options1Temp = [];
+    let options2Temp = [];
     for (let i = 1; i <= 9; i++) {
       const data = await axios.get(`https://swapi.dev/api/people/?page=${i}`);
       const characterData = await data.data.results;
@@ -24,20 +34,15 @@ function App() {
           films: c.films,
         });
 
-        let option1 = document.createElement("option");
-        option1.value = c.name;
-        option1.innerHTML = c.name;
-
-        let option2 = document.createElement("option");
-        option2.value = c.name;
-        option2.innerHTML = c.name;
-
-        select1.appendChild(option1);
-        select2.appendChild(option2);
+        options1Temp.push(c.name);
+        options2Temp.push(c.name);
       }
     }
     setStillLoading(false);
+    // set values for objects and options
     setCharData(final);
+    setOptions1(options1Temp);
+    setOptions2(options2Temp);
   }, []);
 
   useEffect(() => {
@@ -200,12 +205,16 @@ function App() {
       <form className="select_boxes" onSubmit={(e) => compareCharacters(e)}>
         <div>
           <h3>Character 1: </h3>
-          <select name="character_1" id="character_1_select"></select>
+          <select name="character_1" id="character_1_select">
+            {options1Elms}
+          </select>
         </div>
         <button id="button">Compare!</button>
         <div>
           <h3>Character 2: </h3>
-          <select name="character_2" id="character_2_select"></select>
+          <select name="character_2" id="character_2_select">
+            {options2Elms}
+          </select>
         </div>
       </form>
       <p id="similarities"></p>
